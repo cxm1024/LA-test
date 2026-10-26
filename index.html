@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>线性代数之美 | The Beauty of Linear Algebra</title>
+    <style>
+        :root {
+            --surface-0: #05070C;
+            --surface-1: #0A0D12;
+            --surface-2: #0F131C;
+            --surface-3: #161D2B;
+            --surface-4: #1E2636;
+            --accent-cyan: #38BDF8;
+            --accent-emerald: #6EE7B7;
+            --text-primary: #E5E7EB;
+            --text-secondary: #9CA3AF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--surface-0);
+            color: var(--text-primary);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            display: grid;
+            place-items: center;
+        }
+
+        .title-card {
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .title-card.visible {
+            opacity: 1;
+        }
+
+        .title-card h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-card p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+        }
+
+        .scene-label {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(0.875rem, 1.5vw, 1.25rem);
+            color: var(--text-secondary);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+            z-index: 3;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .scene-label.visible {
+            opacity: 1;
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
+            transition: width 0.3s ease;
+            z-index: 4;
+        }
+
+        .controls {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 5;
+            display: flex;
+            gap: 1rem;
+            pointer-events: all;
+        }
+
+        .btn {
+            background: var(--surface-3);
+            border: 1px solid var(--surface-4);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            pointer-events: all;
+        }
+
+        .btn:hover {
+            background: var(--surface-4);
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.25rem;
+            color: var(--accent-cyan);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <div class="overlay">
+        <div class="title-card" id="title-card">
+            <h1>线性代数之美</h1>
+            <p>THE BEAUTY OF LINEAR ALGEBRA</p>
+        </div>
+    </div>
+
+    <div class="scene-label" id="scene-label"></div>
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <div class="controls">
+        <button class="btn" id="play-btn">播放</button>
+        <button class="btn" id="restart-btn">重新开始</button>
+    </div>
+
+    <div class="loading" id="loading">Loading...</div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
